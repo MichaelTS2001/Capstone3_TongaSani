@@ -21,9 +21,7 @@ public class CategoryService
     public List<Category> getAllCategories()
     {
         // get all categories
-        List<Category> categoryList = categoryRepository.findAll();
-
-        return categoryList;
+        return categoryRepository.findAll();
     }
 
     public Optional<Category> getById(int categoryId)
