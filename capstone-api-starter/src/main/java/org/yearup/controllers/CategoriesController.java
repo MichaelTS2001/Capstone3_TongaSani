@@ -86,11 +86,20 @@ public class CategoriesController
     }
 
     // add annotation to call this method for a PUT (update) action - the url path must include the categoryId
+    @PutMapping("{categoryId}")
     // add annotation to ensure that only an ADMIN can call this function
-    public Category updateCategory(@PathVariable int id, @RequestBody Category category)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<Category> updateCategory(@RequestBody @Valid Category category, @PathVariable int id)
     {
         // update the category by id and return the updated category (200 OK)
-        return null;
+        Category updatedCategory = this.categoryService.update(id, category);
+
+        if(updatedCategory == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        else{
+            return new ResponseEntity<>(updatedCategory, HttpStatus.OK);
+        }
     }
 
 
