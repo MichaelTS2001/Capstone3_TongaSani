@@ -31,7 +31,7 @@ public class CategoriesController
     public CategoriesController(CategoryService categoryService, ProductService productService){
         this.categoryService = categoryService;
         this.productService = productService;
-}
+    }
 
     // add the appropriate annotation for a get action
     @GetMapping
