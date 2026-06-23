@@ -48,7 +48,7 @@ public class CategoriesController
     }
 
     // add the appropriate annotation for a get action
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Category> getById(@PathVariable int id)
     {
         // get the category by id
@@ -64,7 +64,7 @@ public class CategoriesController
 
     // the url to return all products in category 1 would look like this
     // https://localhost:8080/categories/1/products
-    @GetMapping("{categoryId}/products")
+    @GetMapping("/{categoryId}/products")
     public ResponseEntity<List<Product>> getProductsById(@PathVariable int categoryId)
     {
         // get a list of product by categoryId
@@ -86,7 +86,7 @@ public class CategoriesController
     }
 
     // add annotation to call this method for a PUT (update) action - the url path must include the categoryId
-    @PutMapping("{categoryId}")
+    @PutMapping("/{id}")
     // add annotation to ensure that only an ADMIN can call this function
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Category> updateCategory(@RequestBody @Valid Category category, @PathVariable int id)
@@ -104,10 +104,19 @@ public class CategoriesController
 
 
     // add annotation to call this method for a DELETE action - the url path must include the categoryId
+    @DeleteMapping("/{id}")
     // add annotation to ensure that only an ADMIN can call this function
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteCategory(@PathVariable int id)
     {
         // delete the category by id and return status 204 No Content
-        return null;
+        boolean deleteSuccessful = this.categoryService.delete(id);
+
+        if(!deleteSuccessful){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
     }
 }

@@ -50,7 +50,7 @@ public class CategoryService
 
         Category categoryToUpdate = updateCategory.get();
 
-        categoryToUpdate.setCategoryId(category.getCategoryId());
+       // categoryToUpdate.setCategoryId(category.getCategoryId());
         categoryToUpdate.setName(category.getName());
         categoryToUpdate.setDescription(category.getDescription());
 
